@@ -63,6 +63,14 @@ public abstract class Machine {
         this.sizeOfDisk = sizeOfDisk;
     }
 
+    public VMType getVmType() {
+        return vmType;
+    }
+
+    public void setVmType(VMType vmType) {
+        this.vmType = vmType;
+    }
+
     /**
      * generate hostname
      *

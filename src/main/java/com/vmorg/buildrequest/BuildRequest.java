@@ -7,6 +7,7 @@ import com.vmorg.build.SystemBuildService;
 import com.vmorg.exceptions.MachineNotCreatedException;
 import com.vmorg.exceptions.UserNotEntitledException;
 import com.vmorg.machines.Machine;
+import com.vmorg.machines.VMType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class BuildRequest implements VirtualMachineRequestor {
             ++totalFailedBuilds;
         }
 
-        totalUserBuilds.put();
+        //totalUserBuilds.put();
         ++buildCount;
     }
 
@@ -67,7 +68,9 @@ public class BuildRequest implements VirtualMachineRequestor {
     }
 
     public void updateBuilds(Machine machine){
-        if()
+//        if(machine.getVmType() == VMType.DESKTOP){
+//            desktopBuilds.put("desktop")
+//        }
     }
 
 }

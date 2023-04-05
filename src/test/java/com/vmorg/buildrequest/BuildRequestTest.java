@@ -7,14 +7,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class BuildRequestTest {
 
     @Test
-    void createNewRequest() {
+    void testCreateNewRequest() {
     }
 
     @Test
-    void totalBuildsByUserForDay() {
+    void testGotalBuildsByUserForDay() {
     }
 
     @Test
-    void totalFailedBuildsForDay() {
+    void testTotalFailedBuildsForDay() {
     }
 }

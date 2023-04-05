@@ -1,16 +1,7 @@
 package com.vmorg.machines;
 
 public enum VMType {
-    ;
-    private String name;
-    DESKTOP("desktop"),
-    SERVER("server");
+    DESKTOP,
+    SERVER;
 
-    VMType(String name){
-        this.name =name;
-    }
-
-    public String getName() {
-        return name;
-    }
 }
