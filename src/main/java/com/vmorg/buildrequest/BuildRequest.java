@@ -1,21 +1,15 @@
 package com.vmorg.buildrequest;
 
-import com.vmorg.auth.Authorisation;
 import com.vmorg.auth.AuthorisingService;
 import com.vmorg.build.SystemBuild;
 import com.vmorg.build.SystemBuildService;
 import com.vmorg.exceptions.MachineNotCreatedException;
 import com.vmorg.exceptions.UserNotEntitledException;
 import com.vmorg.machines.Machine;
-import com.vmorg.machines.VMType;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class BuildRequest implements VirtualMachineRequestor {
-
-
     private static final int  MAX_MACHINES_PER_DAY = 999;
     private int totalFailedBuilds;
 
@@ -25,24 +19,37 @@ public class BuildRequest implements VirtualMachineRequestor {
 
     private static int buildCount = 0;
 
+    AuthorisingService authorisingService;
+    SystemBuildService systemBuildService;
 
+    public BuildRequest(AuthorisingService authorisingService, SystemBuildService systemBuildService){
+        this.authorisingService = authorisingService;
+        this.systemBuildService = systemBuildService;
+    }
+
+    /**
+     *
+     * @param machine to be created, including hostname and requestor fields
+     * @throws UserNotEntitledException throws new user not entitled
+     * @throws MachineNotCreatedException throws machine not created
+     */
     @Override
-    public void createNewRequest(Machine machine, String username) throws UserNotEntitledException, MachineNotCreatedException {
+    public void createNewRequest(Machine machine) throws UserNotEntitledException, MachineNotCreatedException {
         //check if user is entitled
-        Authorisation authorisation = new Authorisation();
-        if(!authorisation.isAuthorised(username)){
-            throw new UserNotEntitledException(username+ " not authorized");
+        if(!authorisingService.isAuthorised(machine.getNameOfRequester())){
+            throw new UserNotEntitledException(machine.getNameOfRequester()+ " not authorized");
         }
 
 
         //check if machine is not created due to limit
-        if((1 + buildCount) > MAX_MACHINES_PER_DAY){
-            throw new MachineNotCreatedException("Machine build exceeds total machines to be built today");
-        }
+//        if((1 + buildCount) > MAX_MACHINES_PER_DAY){
+//            throw new MachineNotCreatedException("Machine build exceeds total machines to be built today");
+//        }
 
-        SystemBuild build = new SystemBuild();
-        if(build.createNewMachine(machine).isEmpty()){ //machine build failed
+
+        if(systemBuildService.createNewMachine(machine).equals("")){
             ++totalFailedBuilds;
+            throw new MachineNotCreatedException("Machine not created");
         }
 
         //totalUserBuilds.put();
