@@ -1,18 +1,13 @@
 package com.vmorg.build;
 
-import com.vmorg.machines.Desktop;
 import com.vmorg.machines.Machine;
 import com.vmorg.machines.Server;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 
-import javax.crypto.Mac;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -22,14 +17,18 @@ class SystemBuildServiceTest {
     SystemBuildService systemBuildService = mock(SystemBuildService.class);
 
     @Mock
-    Machine successfulMachine = new Desktop();
+    Machine successfulMachine;
     @Mock
-    Machine failedMachine = new Server();
+    Machine failedMachine;
+
     @BeforeEach
     void setUp() {
-        when(systemBuildService.createNewMachine(successfulMachine)).thenReturn("host2023101231");
+        successfulMachine = mock(Server.class);
+
+        when(systemBuildService.createNewMachine(successfulMachine)).thenReturn("host12321321");
         when(systemBuildService.createNewMachine(failedMachine)).thenReturn("");
     }
+
     @Test
     void testCanCreateNewMachine() {
         String hostname = systemBuildService.createNewMachine(successfulMachine);
@@ -38,7 +37,7 @@ class SystemBuildServiceTest {
     }
 
     @Test
-    void testCanNotCreateNewMachine(){
+    void testCanNotCreateNewMachine() {
         String hostname = systemBuildService.createNewMachine(failedMachine);
 
         assertTrue(hostname.isEmpty());

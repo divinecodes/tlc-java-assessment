@@ -5,10 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class AuthorisingServiceTest {
@@ -18,10 +17,11 @@ class AuthorisingServiceTest {
 
     private final String adminUser = "admin@vmorg.com";
     private final String invalidUser = "fake@vmorg.com";
+
     @BeforeEach
-    void setUp(){
-        when(authorisingService.isAuthorised(eq(adminUser))).thenReturn(true);
-        when(authorisingService.isAuthorised(eq(invalidUser))).thenReturn(false);
+    void setUp() {
+        when(authorisingService.isAuthorised(adminUser)).thenReturn(true);
+        when(authorisingService.isAuthorised(invalidUser)).thenReturn(false);
     }
 
 
