@@ -24,13 +24,12 @@ public interface VirtualMachineRequestor {
      * creates a new request for a virtual machine build.
      * @param machine to be created, including hostname
      * and requestor fields
-     * @param username of requestor
      * @throws UserNotEntitledException thrown
      * when a user is not entitled to make a request
      * @throws MachineNotCreatedException thrown
      * when a machine build is not successful
      */
-    void createNewRequest(Machine machine,String username) throws UserNotEntitledException, MachineNotCreatedException;
+    void createNewRequest(Machine machine) throws UserNotEntitledException, MachineNotCreatedException;
 
     /**
      * Reports on the number of successful Windows
