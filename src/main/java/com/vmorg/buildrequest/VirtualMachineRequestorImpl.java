@@ -6,25 +6,31 @@ import com.vmorg.exceptions.MachineNotCreatedException;
 import com.vmorg.exceptions.UserNotEntitledException;
 import com.vmorg.machines.Machine;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
-public class BuildRequest implements VirtualMachineRequestor {
+public final class VirtualMachineRequestorImpl implements VirtualMachineRequestor {
     private static final int MAX_MACHINES_PER_DAY = 999;
     private int totalFailedBuilds;
 
     private Map<String, Map<String, Integer>> totalUserBuilds;
-    private Map<String, Integer> desktopBuilds;
-    private Map<String, Integer> serverBuilds;
 
-    private static int buildCount = 0;
+    private final List<Machine> successfulBuilds;
+    private final List<Machine> failedBuilds;
+
 
     AuthorisingService authorisingService;
     SystemBuildService systemBuildService;
 
-    public BuildRequest(AuthorisingService authorisingService, SystemBuildService systemBuildService) {
+    public VirtualMachineRequestorImpl(AuthorisingService authorisingService, SystemBuildService systemBuildService) {
         this.authorisingService = authorisingService;
         this.systemBuildService = systemBuildService;
+
+        this.successfulBuilds = new LinkedList<>();
+        this.failedBuilds = new LinkedList<>();
     }
+
 
     /**
      * @param machine to be created, including hostname and requestor fields
@@ -39,19 +45,13 @@ public class BuildRequest implements VirtualMachineRequestor {
         }
 
 
-        //check if machine is not created due to limit
-//        if((1 + buildCount) > MAX_MACHINES_PER_DAY){
-//            throw new MachineNotCreatedException("Machine build exceeds total machines to be built today");
-//        }
-
-
         if (systemBuildService.createNewMachine(machine).equals("")) {
-            ++totalFailedBuilds;
+            failedBuilds.add(machine);
             throw new MachineNotCreatedException("Machine not created");
         }
 
+        successfulBuilds.add(machine);
         //totalUserBuilds.put();
-        ++buildCount;
     }
 
     @Override
@@ -61,12 +61,18 @@ public class BuildRequest implements VirtualMachineRequestor {
 
     @Override
     public int totalFailedBuildsForDay() {
-        return totalFailedBuilds;
+        return this.failedBuilds.size();
+    }
+
+    List<Machine> getSuccessfulBuilds() {
+        return this.successfulBuilds;
     }
 
     public int getTotalFailedBuilds() {
         return totalFailedBuilds;
     }
 
-
+    public List<Machine> getFailedBuilds() {
+        return failedBuilds;
+    }
 }

@@ -1,6 +1,6 @@
 package com.vmorg.machines;
 
-public class Desktop extends  Machine{
+public class DesktopMachine extends Machine {
     private int windowsBuildVersion;
     private String buildNumber;
 
@@ -10,8 +10,8 @@ public class Desktop extends  Machine{
     public final int CPU_SIZE_ONE = 1;
     public final int CPU_SIZE_TWO = 2;
 
-    public Desktop(String identifier, String nameOfRequester,int windowsBuildVersion, String buildNumber, int cpuSize) {
-        super(identifier,nameOfRequester,cpuSize,RAM_SIZE,HARD_DISK_SIZE);
+    public DesktopMachine(String identifier, String nameOfRequester, int windowsBuildVersion, String buildNumber, int cpuSize) {
+        super(identifier, nameOfRequester, cpuSize, RAM_SIZE, HARD_DISK_SIZE);
 
         this.buildNumber = buildNumber;
         this.windowsBuildVersion = windowsBuildVersion;

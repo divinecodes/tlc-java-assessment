@@ -1,6 +1,6 @@
 package com.vmorg.machines;
 
-public class Server extends  Machine{
+public class ServerMachine extends Machine {
     private String distributionName;
     private int majorVersionNumber;
     private String kernelVersion;
@@ -11,12 +11,11 @@ public class Server extends  Machine{
     public final int CPU_SIZE_FOUR = 4;
     public final int CPU_SIZE_EIGHT = 8;
     public final int RAM_OPTION_ONE = 64;
-    public final int RAM_OPTION_TWO  = 128;
+    public final int RAM_OPTION_TWO = 128;
 
 
-
-    public Server(String hostname, String nameOfRequester, int numberOfCPU, int sizeOfRAM, String distributionName,
-                  int majorVersionNumber, String kernelVersion, String teamName) {
+    public ServerMachine(String hostname, String nameOfRequester, int numberOfCPU, int sizeOfRAM, String distributionName,
+                         int majorVersionNumber, String kernelVersion, String teamName) {
         super(hostname, nameOfRequester, numberOfCPU, sizeOfRAM, HARD_DISK_SIZE);
 
         this.distributionName = distributionName;
@@ -42,8 +41,7 @@ public class Server extends  Machine{
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Server";
     }
 

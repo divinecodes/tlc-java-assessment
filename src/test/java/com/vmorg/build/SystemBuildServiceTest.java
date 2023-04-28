@@ -1,7 +1,7 @@
 package com.vmorg.build;
 
 import com.vmorg.machines.Machine;
-import com.vmorg.machines.Server;
+import com.vmorg.machines.ServerMachine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -23,7 +23,7 @@ class SystemBuildServiceTest {
 
     @BeforeEach
     void setUp() {
-        successfulMachine = mock(Server.class);
+        successfulMachine = mock(ServerMachine.class);
 
         when(systemBuildService.createNewMachine(successfulMachine)).thenReturn("host12321321");
         when(systemBuildService.createNewMachine(failedMachine)).thenReturn("");
